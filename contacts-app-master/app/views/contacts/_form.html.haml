@@ -1,0 +1,71 @@
+= form_for contact, class: 'form' do |f|
+  - if contact.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(contact.errors.count, 'error')
+        prohibited this contact from being saved:
+
+      %ul
+        - contact.errors.full_messages.each do |msg|
+          %li= msg
+
+  .col-md-6
+    .field
+      .form-group.col-md-4
+        = f.label :first_name, 'First name *'
+      .form-group.col-md-6
+        = f.text_field :first_name, class: 'form-control', required: true
+
+    .field
+      .form-group.col-md-4
+        = f.label :last_name, 'Last name *'
+      .form-group.col-md-6
+        = f.text_field :last_name, class: 'form-control', required: true
+
+    .field
+      .form-group.col-md-4
+        = f.label :email, 'Email *'
+      .form-group.col-md-6
+        = f.text_field :email, class: 'form-control', required: true
+
+  .col-md-6
+    .field
+      .form-group.col-md-4
+        = f.label :phone, 'Phone *'
+      .form-group.col-md-6
+        = f.text_field :phone, class: 'form-control', required: true
+
+
+    .field
+      .form-group.col-md-4
+        = f.label :company
+      .form-group.col-md-6
+        = f.text_field :company, class: 'form-control'
+
+
+    .field
+      .form-group.col-md-4
+        = f.label :image
+      .form-group.col-md-6
+        = f.file_field :image,  accept: '.gif, .jpeg, .jpg, .png', class: 'form-control'
+
+  - if contact.id.present?
+    .col-md-6
+      .field
+        .form-group.col-md-4
+          = label_tag do
+            Current Image
+
+        .form-group.col-md-6
+          - if contact.image.present?
+            .img-thumb{style: "background-image: url(#{contact.image_url})"}
+
+          - else
+            .img-thumb
+              %i.fa.fa-2x.fa-user
+
+  .field
+    %em.text-muted Fields marked with * are required
+
+  .field
+    = f.submit class: 'btn btn-md btn-primary'
